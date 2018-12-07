@@ -1,0 +1,6 @@
+# stringstream Function  StringStream 是一個專門用來處理讀取或寫入到String的類別。
+
+  透過StringStream 可以幫我做們做字串的處理
+  
+  << 輸出   >>輸入
+  
