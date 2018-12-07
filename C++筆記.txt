@@ -4,3 +4,138 @@
   
   << 輸出   >>輸入
   
+  ----------------------------------------------------------------------------------------------------------
+  ifstream
+  
+  ofstream
+  
+  getline
+  
+  C++與檔案處理相關的有ifstream、ofstream及fstream這三個串流，
+  使用時必須先函入fstream標頭，ifstream物件處理檔案輸入，
+  ofstream物件處理檔案輸出，
+  fstream物件處理檔案輸入輸出，
+  建立串流物件之後，可以使用open()函式來連結串流，以下為讀入一個txt檔，並將檔案內容寫到另一個txt檔上。
+  
+  
+  const >>>定義變涼及函數型是
+  
+  
+  
+  #include <iostream>
+using namespace std;
+ 
+namespace first_space{
+   void func(){
+      cout << "Inside first_space" << endl;
+   }
+}
+namespace second_space{
+   void func(){
+      cout << "Inside second_space" << endl;
+   }
+}
+int main ()
+{
+ 
+
+   first_space::func();
+   
+   second_space::func(); 
+ 
+   return 0;
+}
+
+
+RapidJSON  function
+
+http://www.open-open.com/lib/view/open1428311591963.html
+
+http://www.open-open.com/lib/view/open1429837362276.html
+
+ex:
+void somefile::operator() (const std::string &name, 
+                               const std::string &path,
+                               const std::string &version, 
+                               scan_result_t result)
+{
+    rapidjson::Writer<rapidjson::OStreamWrapper> &writer = ((result == KNOWN) ? known_file->writer : 
+                                                                                ((result == SUSPECT) ? suspect_file->writer : 
+                                                                                                       unknown_file->writer));
+    writer.StartObject();
+    writer.Key("libname");
+    writer.String(name.c_str());
+    writer.Key("path");
+    writer.String(path.c_str());
+    writer.Key("version");
+    writer.String(version.c_str());
+    writer.EndObject();
+}
+
+
+  ---------------------------------------------------------------------------------------------------------
+  
+  
+  parsing
+  
+  scan
+  
+  patterm
+  
+  
+  
+patterm matching
+  
+  
+ download library  patterm
+  
+  
+  
+  
+  
+  
+  
+  
+  ---------------------------------------------------------------------------------------------------------
+  
+  
+  BaselineFileWriter.cpp
+  
+  
+  主功能
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ---------------------------------------------------------------------------------------------------------
+  Scanner.cpp
+  主功能
+  
+  
+  
+  
+  
+  ---------------------------------------------------------------------------------------------------------
+  Pattem
+  主功能
+  
+  
+  
+  
+  
+  ---------------------------------------------------------------------------------------------------------
+  
+  
+  
+  
+  
+  ---------------------------------------------------------------------------------------------------------
