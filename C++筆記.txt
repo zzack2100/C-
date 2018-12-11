@@ -4,6 +4,53 @@
   
   << 輸出   >>輸入
   
+  
+  header include 內容
+  Cpp include 內容
+  
+  // SVS does not have offline behavior, so just keep the provider store
+    // needed by online
+  
+  #pragma once
+  
+  
+  是一個非標準但是被廣泛支援的前置處理符號，
+  會讓所在的檔案在一個單獨的編譯中只被包含一次。
+  以此方式，#pragma once提供類似include防範的目的，
+  但是擁有較少的程式碼且能避免名稱的碰撞
+  
+  
+  
+  
+  
+ ----------------------------------------------------------------- 
+  
+  
+  https://msdn.microsoft.com/zh-tw/library/h6227113.aspx
+  Delete C++
+  
+ cast-expression 引數必須是先前配置給物件的記憶體區塊指標，而物件是使用 new 運算子所建立。 delete 運算子具有類型 void 的結果，因此不會傳回值。 例如:
+  
+  -------
+94/5000
+IMPL以IMPL結尾的類一般是實現了某個或多個接口的類這些類的接口是定義了
+一些規範的類通常是數據訪問等等在服務中會通過spring的注入註入這些接口來實現邏輯
+
+簡單來說就是定義的接口 
+
+ -------
+ 
+ 
+為何要使用 pimpl?
+
+這 pimpl 慣用語如何改善軟體開發生命週期:
+
+編輯相依性的最小化。
+
+介面和實作分開。
+
+可攜性。
+  
   ----------------------------------------------------------------------------------------------------------
   ifstream
   
@@ -21,7 +68,7 @@
   const >>>定義變涼及函數型是
   
   
-  
+  名稱空間（Namespace）
   #include <iostream>
 using namespace std;
  
@@ -48,10 +95,16 @@ int main ()
 
 
 RapidJSON  function
+RapidJSON: Stream
+
 
 http://www.open-open.com/lib/view/open1428311591963.html
 
 http://www.open-open.com/lib/view/open1429837362276.html
+
+http://bodscar.pixnet.net/blog/post/61204511-%E8%AA%AA%E6%98%8E-typedef-enum
+
+http://hant.ask.helplib.com/c++/post_12433904
 
 ex:
 void somefile::operator() (const std::string &name, 
@@ -73,6 +126,33 @@ void somefile::operator() (const std::string &name,
 }
 
 
+
+
+
+try catch c++
+
+try { 
+    // 程式 
+    throw Type 
+} catch(Type 1) { 
+    // 錯誤處理 
+} catch(Type 2) { 
+    // 錯誤處理 
+}
+
+extern 全局變量
+
+static_cast
+
+  ---------------------------------------------------------------------------------------------------------
+  /etc/ld.so.conf 說明
+  /etc/ld.so.conf
+  紀錄目前系統所運用到之函式 ./lib是預設
+  
+  
+  
+  
+  
   ---------------------------------------------------------------------------------------------------------
   
   
@@ -119,23 +199,228 @@ patterm matching
   ---------------------------------------------------------------------------------------------------------
   Scanner.cpp
   主功能
+  讀取loacal的資料，設定子路靜以及父路徑
+  
+/* In order to avoid to traverse the same path multiple times.
+ * If the new path is a child of a candidate path, we ignore the new path.
+ * On the other hand, if the new path is a parent of a candidate path, we
+ * remve the candidate path. If the new path is not a parent of any candidate
+ * path, we treat the new path as a candidate path.
+ */
+  
+  
+  
+  
+  ---------------------------------------------------------------------------------------------------------
+  ld.so.cache.d  設定檔 主要為索引檔
+  
   
   
   
   
   
   ---------------------------------------------------------------------------------------------------------
-  Pattem
+LdCacheParser :
+
+驗證 索引檔的程式:
+如果有新格式會更新 然後copy到Vector 
+ 
+const char HEADER_MAGIC_OLD[] = "ld.so-1.7.0";
+const char HEADER_MAGIC_NEW[] = "glibc-ld.so.cache1.1";
+
+
+    int32_t flags;
+    uint32_t key;
+    uint32_t value;             寬度恰為 8 、 16 、 32 和 64 位的無符號整數類型
+                               （僅若實現支持該類型才提供） 
+                                (typedef)
+	
+int8_t  分別為寬度恰為 8 、 16 、 32 和 64 位的有符號整數類型無填充位並對負值使用補碼
+                 
+                
+int16_t
+int32_t  （僅若實現支持該類型才提供） 
+        (可選) 
+int64_t     (typedef)
+
+
+
+
+ ---------------------------------------------------------------------------------------------------------
+  Pattem 圖案
   主功能
-  
+  Download :???????
+   
+  "type": 1,
+  "target": "libssl",
+  "section": ".rodata",
+  "pattern": "^OpenSSL ([0-9]+\\.[0-9]+\\.[0-9]+[a-z]*)"
   
   
   
   
   ---------------------------------------------------------------------------------------------------------
   
+  ALOGGER_WARN
+  logger_
+   const Pattern &pattern_;
+    const Logger &logger_;
+	dirpath
+	
+
+
+
+
+	
+#include <iostream>
+#include <vector>
+#include <string>
+#include <io.h>
+using namespace std;
+ 
+inline void getfileall(string path,vector<string> &dirpath){
+	struct _finddata_t fileinfo;   
+	long ld;
+	if ((ld = _findfirst((path+"\\*").c_str(), &fileinfo)) != -1l){
+		do{
+			if ((fileinfo.attrib&_A_SUBDIR)){  
+				if (strcmp(fileinfo.name, ".")!=0 && strcmp(fileinfo.name, "..")!=0){  
+					getfileall(path +"\\"+ fileinfo.name, dirpath);  
+				}
+			}
+			else  
+			{
+				dirpath.push_back(path + "\\" + fileinfo.name);
+				//cout << path+"\\"+fileinfo.name << endl;
+			}
+		} while (_findnext(ld, &fileinfo) == 0);
+		_findclose(ld);
+	}
+}
+ 
+int main(){
+	string  path = "F:\\image";  
+	vector<string> dirpath;    
+	getfileall(path, dirpath);  
+	return 0;
+}
+
   
-  
-  
-  
-  ---------------------------------------------------------------------------------------------------------
+ ---------------------------------------------------------------------------------------------------------
+ ServiceImpl
+ 主要功能
+ 
+ 
+ UtilLog.h 
+         >>>>>>show log 
+		 
+ Log.h 
+     >>>>>>>>>>show log 
+ 
+ 
+ 
+ 
+ ALOGGER_INFO
+ 
+ 
+ 
+     // setup rule path
+    PathConf::setup_path(conf_->rule_path());
+
+    // init http
+    Http::Client &client = store.use_provider<Http::Client>();
+    http_channel_.reset(new HttpChannel(client));
+
+    // init mqtt
+    MQTTAgentClient &mqtt_agent_client = store.use_provider<MQTTAgentClient>();
+    mqtt_channel_.reset(new MqttChannel(mqtt_agent_client, OnMqttConnect(this)));
+
+    // init handler
+    TaskDispatcher &task_dispatcher = store.use_provider<TaskDispatcher>();
+    baseline_handler_.reset(new BaselineHandler(task_dispatcher,
+                                                *http_channel_,
+                                                *conf_,
+                                                host_, 
+                                                model_));
+ 
+ 
+ 
+ 
+ 
+------------------------------------------------------------------------------------- 
+ 
+ 
+ void Service::Impl::on_notify_pattern_change(MQTT::MessageData *md,
+                                             void *userdata)
+{
+    Service::Impl *service = static_cast<Service::Impl *>(userdata);
+    if (! service)
+        throw LIBSVS_EX() << "service is corrupted";
+
+    if (! md->message || ! md->message->payload || md->message->payloadlen < 0)
+    {
+        ALOGGER_WARN << "ignore the invalid notify pattern change";
+        return;
+    }
+
+    ALOGGER_INFO << "received notify pattern change";
+
+    // check pending status earlier to avoid unnecessary message parsing
+    if (service->get_baseline_task_pending_status())
+    {
+        ALOGGER_WARN << "baseline task is pending, ignore this notify pattern change";
+        return;
+    }
+
+    ATOM_TRY
+    {
+        Document d;
+        parse(reinterpret_cast<const char *>(md->message->payload),
+              md->message->payloadlen,
+              d);
+
+        size_t backoff = get_uint_from_path(d, MQTT_BACKOFF_PATH, MQTT_DEFAULT_BACKOFF);
+        size_t random_backoff_s = rand_range(static_cast<size_t>(0), backoff);
+        ALOGGER_INFO << "backoff: " << backoff;
+        service->start_baseline_task(random_backoff_s);
+    }
+    ATOM_CATCH_LOG
+}
+
+
+
+Mutex >>>>>>互斥鎖
+
+https://kheresy.wordpress.com/2012/07/11/multi-thread-programming-in-c-thread-p2/
+
+
+ ---------------------------------------------------------------------------------------------------------
+ 為什麼一個在libsvs  一個在src內定義  一個在atom_internal定義?
+ 
+ 
+ Defs 
+ 主要功能 定義值  要去找個別定義的意義
+ 
+ Util::UniquePtr<Impl> pimpl_; 定義????
+ 
+ init 
+ 
+ 
+ 
+ 
+ ---------------------------------------------------------------------------------------------------------
+ LIBSVS_EX()
+ 
+ 
+ try      catch 
+ ATOM try ATOM_CATCH_LOG
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ ---------------------------------------------------------------------------------------------------------
